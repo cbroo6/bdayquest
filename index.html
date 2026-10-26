@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Tarek Tohme's Birthday Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sigmar&family=DM+Serif+Display&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  --bg: #eef1ea; --surface: #ffffff; --ink: #1d2a33; --muted: #5b6a70; --line: #cfd8cc;
+  --accent: #2f6b4f; --accent-ink: #ffffff; --mark: #f3c843; --bad: #b3362f; --bad-bg: #f8e3e1; --ok-bg: #e3f1e7;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #121a17; --surface: #1b2622; --ink: #e6ede8; --muted: #9aaba3; --line: #2f3e37;
+  --accent: #6fbf94; --accent-ink: #0d1a14; --mark: #e2bb44; --bad: #f08a80; --bad-bg: #3a1f1c; --ok-bg: #1d3327;
+  color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+main { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px;
+  padding: calc(24px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+h1 { font-family: "Sigmar", "Arial Black", Impact, sans-serif; font-weight: 400; font-size: 2.2rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.stub { display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; border-bottom: 2px dashed var(--line); }
+.stop { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; background: var(--mark); color: #1d2a33; padding: 2px 8px; border-radius: 3px; }
+.body { padding: 20px 18px 22px; display: flex; flex-direction: column; gap: 18px; }
+.clue { font-family: "DM Serif Display", Georgia, "Times New Roman", serif; font-size: 1.5rem; font-weight: 400; line-height: 1.3; white-space: pre-wrap; }
+.welcome { white-space: pre-wrap; }
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 10px; }
+.steps li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; font-size: 0.95rem; }
+.steps li::before { counter-increment: s; content: counter(s); width: 22px; height: 22px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line);
+  display: grid; place-items: center; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+form { display: flex; gap: 8px; flex-wrap: wrap; }
+input { flex: 1 1 160px; min-width: 0; font: inherit; font-family: var(--mono); font-size: 1.05rem; letter-spacing: 0.08em; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+button { font: inherit; font-weight: 700; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); padding: 10px 18px; cursor: pointer; min-height: 46px; }
+button:disabled { opacity: 0.6; cursor: wait; }
+button.link { background: none; border: none; color: var(--muted); font-weight: 400; text-decoration: underline; padding: 4px 0; min-height: 0; font-size: 0.85rem; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; }
+.msg { border-radius: 8px; padding: 10px 12px; font-size: 0.95rem; }
+.msg.bad { background: var(--bad-bg); color: var(--bad); }
+.msg.ok { background: var(--ok-bg); color: var(--accent); }
+.progress { display: flex; flex-direction: column; gap: 6px; }
+.segs { display: flex; gap: 3px; }
+.segs i { flex: 1; height: 8px; border-radius: 2px; background: var(--line); }
+.segs i.done { background: var(--accent); }
+.segs i.here { background: var(--mark); }
+.found { display: flex; flex-direction: column; gap: 6px; }
+.found div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: 0.9rem; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; }
+.found b { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); padding-top: 2px; }
+.finish { text-align: center; padding: 30px 18px; display: flex; flex-direction: column; gap: 12px; }
+.finish .big { font-family: var(--display); font-size: 2.2rem; font-weight: 800; }
+.shake { animation: shake .35s; }
+@keyframes shake { 25% { transform: translateX(-6px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-3px); } }
+@media (prefers-reduced-motion: reduce) { .shake { animation: none; } }
+footer { text-align: center; }
+button.hintbtn { background: none; color: var(--accent); border: 1px dashed var(--accent); align-self: flex-start; min-height: 40px; padding: 8px 14px; }
+.hint { background: var(--bg); border-left: 4px solid var(--mark); border-radius: 6px; padding: 10px 12px; white-space: pre-wrap; font-size: 0.95rem; }
+.hint b { display: block; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+:root { --bg: #edf1f7; --surface: #ffffff; --line: #d0d5dc; --accent: #1f4e8c; --accent-ink: #ffffff; --mark: #f6b8c8; --ok-bg: #e0e6ef; }
+@media (prefers-color-scheme: dark) { :root { --bg: #10161e; --surface: #111b28; --line: #132439; --accent: #8fa7c6; --accent-ink: #ffffff; --mark: #f6b8c8; --ok-bg: #2a313a; } }
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"><p class="muted">Loading…</p></main>
+<script id="hunt-data" type="application/json">{"v":1,"iter":150000,"n":29,"title":"Tarek Tohme's Birthday Quest","lockText":"happy 29th birthday, baby! \nwelcome to your birthday scavenger hunt! \n\nI love you. \n\nEnter the password to start.","start":{"s":"ukj6YCC0UsTj1U+WrvO4pQ==","i":"EfM8Mu0XNtwfA5dE","c":"2BcTv43V8P/2jZC8mu0ppEQstcKko1b05OKgcy9Djy7QHvZdsQVecCz13ThCV55m2HNyLJqXtY7e0s3el489SEteqioVY/Z6Le1avPIVOYGUNai7bAIZ+4CYoYvHUNYhnx5qt1wv+ypeD3VSAZKijq9BtB6fM07xcacSlEsBon6P3SE4Z3VSN5NbnqpGTp9wiM2Iwo0+3Ld6fr8DAK4DX9I8XQbxhpAtQO3G3WtkQyYMn9QhNIxD1cQu9BN4zV18x44DLsiFt2AzveiYI6ko5rW2sb4oMhn6wKng6erWZM8udGbdjyCKvUprAmfEbQWwNM3oOtPTyUUf3RShtLIxIsMLGnA4rnWcWMLcqc5UesAyJVlSkngi1ljOF0mYRMn7VeHyCaAvx1CEJ2zVBcX9TXHeBehEW/4uCvCneO0D9gMQ1Qf4fnwD5G0EvraAwrKohb/+GLhvjSat1YxdEpbVIJkzC21m7uJJGNJAXgNsmTrtvL+f8DWZLGGYB90oJ2mnUaI/We/6kzCI+9zkJcM/LGUzCnghSgVvJCCr0Ytbb9UBhPv4c33mUixAvaLiflwtsCmdbgX9RgTwYohUKCM4a0FIhI3IfyBKtHRkaQzqi68gzYt33cpEBPSsi7lhAIWFX732w9NfpILP4BKAmlLVfha622pn9zYsLFoNCHuq9ns7TPEHSGbaVmU8CPAn2xpMLdtvCfZJLcHX5LGSZ0TC8jSZfesMI2YIfaLoQiVtIq+5r+i6wckn7++VnucBYYxBYM/yuicBszYXo9xj2wSkz68/J4HCEEp4P0VR1D43/qTwBmqsFg=="},"steps":[{"s":"aX2TpBuK/Uc8FGvA0wTd0Q==","i":"7NWcqx5c5bAyJAZ/","c":"EfXz1Ci97CL3T6LWFg9KpAz8Yrq6BhkVmkAQqIqKaE2+vFhMEXkKYOTQEpDvhPBuX/RB24hvKIc2UFDIKMlhK5HdbFvgX4LqiwjgV2fwu4dvXANrOFLdwb1nh7sWQqKZtBNqFB9wyYCt1Hjk9od3v7fOMMDSFQqbOny9Dm2UjH1ry9RYV4kAbG4thnlJLBKV/FtCMqkIERnwftobAfzb9iZzXbijTPE8zQslQD+iU0I+V5fBAMXEFUKQ103qZVqNECZ1RfQT6r0exw=="},{"s":"9gdCJGHnci4Ug3QaAMpg/w==","i":"uhzqEJ6rmP41sYEu","c":"cpKVar3qNsq88/VYIW9IYeqrou+HkX8VOjyPDN96uCZ00NZomD76YI6Wc51uCS8JjgZNQ3xVMrMhByJdoW003HSDpL/w424QfA5XLXc0w/Otd7eKPiTLczLbe9cetv6fHWpwvHj+Zna//YneHKsnWZf9Nz3eVPAwnqULmoIiEk+H/q7uif7pXewhUaDpvO0QUSrzgiG8oj4lC8WzQRJGSHCSr8mbEA5ilMMXf346xlpEOuzZjbubWjYvudTQv3qnn+CCDboUdcOx7Zc2Ojg+749l4/IKzqqmA72HSrKFQk7ixYkF2BFavx0PVefVw0YpCWO4woJxUSaTCO33n91Gqo3OpuPLaV0lgbry5FndbA=="},{"s":"Q+Z1tyGflDECZAQ+bhincA==","i":"GpsOD1aMFgm7VksB","c":"QVWRAo4gCiRG8OELkHczsk1h1uos4Yuk+X431q2LJb+5m4cAgrc4vKsyuZTLGU8V8aBE5Aedd2oDT+0wdFjjREZHEl07Gi8cEMfbj8cPvdBki7+klbsuByc1/LiXfh3vnYXxC5SDY1X6s4W/XH6mvGcfNRXSlmCUWLqgCle3QqZ6U+sfAvAB2F3w6tLS9SX/EB5FyoL7fqOOOgUnJA2BhL+MgiqCSNEyq9Atv2l6erFZXbpqGhSTjwGfj4+h2J4f0uGRAYCAag=="},{"s":"Iiz0FRovNgOqaufSUh/FPg==","i":"oBaFqrSeq2ktxwn6","c":"iY623NMq7hoR6QRc/79cC1gRrLgnjQoFWuC+lVwbauw5kHvFXWmMCzXTjPJugq/fSNDY0EuTvHRFD2knEKDLqp5D9Mr2nslVRqe71F2x27G/wPOf/LFAk9YOK1BEGoPh0W16zQSF12+TPmM8nzVlv7YgRIANVHoSIa3nfe89qnnb69ijwO1GFBWRz/9tTPK5JIE1hQsJNMh3FFcRNGdfKcAGmKQLHrzKrZyM60IM/WJBwK7mKP3+KUvfZVXuU6XEvGt2vfsuZglRR4qacrQNAg=="},{"s":"NdzUdRKfW2paoqjIGVqrew==","i":"NVPdGCExPEhpn7Av","c":"w4SwNwYxp0+XdqvPhv76FSI9OJqUnIxDh3ajum0HgHZt7ci1oGtOUTt70BVLxfqHbrncgOzviiuwC+NWRvqVGcVCPy+Q++/Y6Soasj3aMiRHR23E9/XXBGgYvWDtm+cpO10RUVhUw518yIrrqRtSwph6rNEtNNtnEF+B5DFZTbvIJNiBxQvTIbjLDivUWf3Mbd2VNGd36i5h4uvqfrrERyJI+7n3EMGZsle12fZUNo7jaNOCgNqPM6mHMazuFEJ0G2xyDEqt4zaH0zFKrOnpUfJOMyqi2ZiMUB4kZPdRhhIujn5lVnDGaAvjVyClPNe13k/Lm5BNX0smZWGikjKgLKg="},{"s":"nBfNiOWNg3x6TenRqkIq9g==","i":"a3cAdZWjBqN3ohEZ","c":"au4stCTQ6x4o9FNjbscTD/YQK6pcY7lJcarU8T4MUlz3qY4n25EyNUhMXet3srIH50e9ppkBePEk6kDdJOWddtzAvscNcO3SZWVEOZxJA0qmLyhWpHXASuaf4Tm5sjPasrdtZMPvdo/gK/2tFT7OXqvn9NeOzZ5NgCRRw9BvSewTpE8DCSj64D4s04S/xg0Yi3q9fs8O5Q8qE8ZaITZsaKedoSX+8/tVCkkCmJSodgZCOGNI+RhQSwE="},{"s":"FnNmXfKpZoYpBWyp9Rv5CA==","i":"wyBb2eAcNjl+J0sA","c":"KHViFfXVtw+KeyLY3bsIef1CvQIFN2/U5I1yDR9A9XbW8r7twRWR7NED/plPEuS8ywQY2H7qtmUaNDWeYA/eagbcdJBM+sTy+jM5WbIsu/0ZIOpSfXX1mLTbLcaGITb+H2aQJ2a8T/RgdTculduh6pNJ5PIp7Qoo4Jr3I182HwXj4tnmhPuJCwUF4w+bT66oFlboaUZJoDRWvlctsE8="},{"s":"EK9lFl6JszQxkxSGIHbmeg==","i":"q/URvxXIxUSe6Cpw","c":"zVf1MjUGm3UV4087u2Z22mnmn0oNwVMaA2Uinhj2cJc7rFnabf1GElTCfBwXxRCqNACCdEgZOT0Q152Tx4s2EGhpbBIeh0gwfhz+K2PyECssqtP5n33Jd5MGE/f0D6jxzxj8Ss+HfoT263pcdgolKFjkYJKqP10dMRdfto8wh5qXGFEUM438OYlMj19jAEItwOST2nVzdump2FqWnGR/yfQSqNpitx1/pmMv0OIxp6xXLQkJQr8weU6ovxs1t3OYFSnZdGYY+kDue5tq+xtd"},{"s":"hvSkED+l0tIjNaE8v9ap1w==","i":"030lZIO0iYEgEx+a","c":"eAMkZYlEcg+ODjLt9NZg3hLOO5egto+Wc9PZ31OL7NcA0Z0t69oUPH46fsCLsPf0COUUM1yPLSD5eHWj28/egQmD4AEsV1XkB2ZZYeCHuogE9DS8ZOctmvv7q79Jvtq5Qkry8Iiws58FFV3HjYOJYoK1M12o0/8V/Pd9GXW1Xh9j1Ch8EhjnJJJTJf9blFKEvE7ut1RebRpq6s6HBl5zwa7xnDAqOrw11whpngorsgXIfl0N2F7uA5L2"},{"s":"M/q4JCWeBsKoGnFoCht51g==","i":"Pnd51FX2LWhTm52m","c":"0gVj0grR6dKlPtugP1CfodITuMUavx8v7X64Gd6xKpxmPTwv+WC2zd4C/8X7tV0xN3F8Ek3eQYxn/FK/WvzyAqsMM9PWCKJyzLHO6iDKQKG6K8l2tm3lWU6RpPDTI3H/hjRDUj+xUzmrahmkKQF+4ZpWBFAYisVUIAwwSUP7+zM4W6qH937bqy0VDJr9D4267T/9125irwVuGprJ/5bJb/tBw1K4K9kQR6sjvvIqu20enfbi4E9yDw=="},{"s":"gEJhE7+roSKaDj21jg+RSw==","i":"syva+Z09RIIiaubQ","c":"UrOzlhdtL2y0qs7nToBK22+jmSWjeeVZW0RoXL5R7xhUpgaE874t4B2O/+vf4nHf73ubrQtjTw5dIFT48p6fWFMywyDLLL2XMYfuig3N+J+zJVtjDF4HDj7+jQz5ICMSNds2DqjptJjZwyfCo4frXwWaDJfajXCmQVMwz3dVUPgSHj8/HLHEjw2EVo3fbvmIfXN4qLkda3KDuQv1U9lkcxPr1RBSR/O5FjfKT2bff8ccmskF9yYSVgsn1ocNaIUPY6ciZkfeokU64/IN8Bs="},{"s":"ax9YeeTjCjUc+FiCpLtdIA==","i":"voGHGvIPEIFpYhFy","c":"qrx73gLp5TO+oDCa9RR6zAZt2PHluoFPLSzshezEuraRUjsrncD2GtwaVh3yMEQwSoRsL0vkYit3lZFhrPR4cYL3ioWU23H27bsGxQr2w6JLRn4vNLrUxVUAVKKvHxlvYgSIh0up9hAxF7VLE3KP5N2lHpi7fKr/MG1Bi7H8MoyOi1Ej20sqWUpK4VJC"},{"s":"NxS5Rddn9P+SZgMfc4MnQA==","i":"NM3NK4y0vsfSHX0l","c":"cjot4JuqheDOuslmjlAkgDuYEZDwL39ddXvjdrAD/kt2GzVoKyPAW3P1Fzdg8iJw2E3pkpYoZHkP8yCLOMp0A/BJuOs4cM9R87gwWHGfzonRY3/7gh8RzHbfwjF0dk06yFK1OhNDIbvdk00b+pNVyXnAtxPyoduB1PytLKX4kO5zu2BR8HdxrDkRGdGcDts05jslbReBiuJC+wEsbm8SvRHFQ/28jln8PFqXc9UZwa1xl5O2YmKV2DeLYVUygmfWc2ylNMmYnzuKY4GwqCWsdb67S110QUIcVACNjK9tHjiE"},{"s":"g3u43Qj8qjpDhENeZEQ8kQ==","i":"ufqAnujVInm8GYwr","c":"5zfoCAOMWH6VvF04F9v8uitVzPB8btKvr2yEpYSAzjFZwCfHlpbcirNBnpwbkTuGxp9SHrsfEXzRWoHlCWmJoWIxPOGVBiovV8Fl7zDkRMg/j+D/CAACjPMsSAIqYFxgKjK4Zi1GrzWDIRizQrJf1n/Y9l3dr27kIMHD13SQFfSkzKAJCxp1132WbBGhcpieh122jWzxAHjNgOz8webBm13aI2lkQa8r/yWZvFA="},{"s":"AW3JfmgoLANx0NNPyaBtlw==","i":"6U8YXOEDXuYMvZH8","c":"86Ot1KFzKZ6Fghg7Oks7RmDUzTA8VnWTixmbnoORv87CEf/quzyfF6K7S5C7lji8wdxxnDua48m8HPmLhlA06YDZfLy5ck96qS9q4N1mYlcx/p9LyNYHXlWtDL9wKD+Uq7Ylg/uq4bLGpm9FhiD6iQs/RDaR+ps/KfBLenWKIPrvKgNQD58ZXy1J1H5mcGiYlLDCkNJlOI3HK5/PzyFkZotbvPUHhKZlThtIL2EuRk2pjQD4yX1ow/36oCGgyTvlEYCvdNl8vM+ecAaI+uM="},{"s":"KSymooRwC0AfZdfEu9dnpQ==","i":"ARaLShz8iNQpD5x2","c":"udsxCgjLM+um5RlFZASjwVa7RyeLXuIewendWlC+SR/A9kLaCuDlEY54LOvza2fR5KSet5CI/iVgmFA5pdrSWxk6M18/GLmoEtVAAAaEh5bJ/OWn4+X4vDa/03jcGy6xSasfracZgrJJbolbwzh/WdK57chqQk4x5y3HHLH8RVzU6Lu9S6idzdanDlUUXFI3ECFPOOmERt5nKVQISzPQ4yM3yLnpsYm3jPLQbe7c4+uJB2pEyYKOniK0TTqrk3n0Az8GquKH"},{"s":"fFrc0O3g6Sx/+5aX3Ga71w==","i":"khZyzmObCcanVq6s","c":"8C3g8lNjuqEXHRCWH5cyCsjARr9o7Nz9o/vVeZPsIW/cxoxSdRpeqWHEihgCFh2dM1xy+ogE5MUqV33rMCYN53/oCDJhrw/CSKja81Jal/lKJ43wrxeYIw8itsqe8QNus5f279pM4S8/E5ILbr3jOz7Kcw2MpDhfx421U5v7H13VoDCqqoxyAggCzNLc3ROFDqDoaMTooyzEmd5YMPsR5PL2Q94ckdWhn+fyCxze//bvFmocKIvp+k35/GZomccGhcLk8Rs2kNN0UVItG3StbTW/cxWZNn1Yt8Cpu3stucAuQm7pXNgPAkMLth1EkMOL7v33NfPciln1uYZQ7B0JmA=="},{"s":"CWRwsBme5uVP9D5pESrqSA==","i":"2bfq28D6G4aNkm3M","c":"KDUjHwxV94gOS93//DepoFRt6Em4whK87R1QWjGCYixGbi1NqaOqqI/T/UMdkzqG5Hez5Ymf8DtEksR45r94BdD3wmjZFlaLQQPM6Tx3Bdk3DoJB1DqKWRAfyKKZqe9PkbSJ0DrbihWoed59Ul5BkHIHkxiUxOcqPxPl1LsJraNulRPRI/Kq10s="},{"s":"C+SnXQfte0ZGQdD4Rvwpwg==","i":"IO+Zv6NpwUgS5wWl","c":"hrrxEy3gpptXv8LCxXxSOoryivmO7QmECENgEuBHqAJEHqjiIEvyi5jOQUJge9uKyWvVfPV2buMIbXD+2fz17w1Ss5JDCn2I5QlFBgRQUeEuqZ7Cf7/DbufSSMiaNwc/P0XAUaunj1aym+siEQW9rljkJiioxaVmqzB4U4GaLKmJCML9jKch58zIPqkXejO4kIQ1c0GBqjkcYRhSyIvNsttuYmftJi2AqJZl3l7Dzkv+lgGw1dQhgKT6gujfwRvf9LC9OJk8zYcRfA=="},{"s":"MqjwZ1En8hI5Jmip/mC6BA==","i":"USGx/kj4tp8UiqkB","c":"Cmzsjz+SZGtkwTkLR2te2PzX0eRX3u8qvkGBGxvNUV7F2z96nD3HjoRNkJnwVovmnyVhperWvyePPUHoPyg6GnsadbRYC1jPw3+AGshq/aZju85qehlphADCYbCwvnR1PjnNr63Zn08WMj/PfxO2dHBxX1Zc4zCAFWdkZoVMGP2N6qBY5SE6Xy95C7WKusO9X9YQpSiSXh0JAc6e9iFAPI/aJ5Gv83+5jUHPzLZrTx42GOjAEVHrkHAn+Sgf5ry6nl/pBWlnOjTQLJtW0c26bKs9yYWU"},{"s":"PXJTGBRvQqZQS+pF0JXo3g==","i":"WpBxKYRQmHCxUTh0","c":"9mxs+UMdVmlyqPgPqsbonYwAfejLzUgOFTV2eTPndgkwlPgmUs1gO8g5SWIeN/NL2FVyVurjCtTva7y8JYu9Qmv6RH+8gORmoC8uUNjN6+U7FCla93nvqmpwTzn14gePXBfNY/1LLceNtCv1Z0keKuU/Q7w0qTJFTq2c2rDNmTdSGe7WllDx7w82wkzjRFMRiNpj9R1l6ccz4tQI5JpfHtosY8S+2j1Exo/C7OpOQTiUOVRas4VCyA4C7I3chfe/UVrMy7CZm8BtzEf0nZTDsHTo4QNxEKAWlX9bMT2EpljnNcQR0IDb6+Qg/ytqnVHGVerH39C2mUZoqsOi4CfxfalgkVUcunQXKvym8U0V7885ZLGdQoFEBDGsK8svhiURb7Nf1ZpPhWEPngu5xmEFlkk="},{"s":"AczOFT4TC3d3u4Jz6VC6Ag==","i":"IKGscnTbOb6fxOmN","c":"0ES0KKMaIJWTY3thpObg4YQ+BXwgxMFWVhb+A+k12ZMXhRhq1U+A30giI8DjXiZy/4O1KmBn2qm1gs5HzVUblgsJBKKvHnCoxRXjtkfyCgFvZQp8dEs7lUgLPDBsdjzhw98WUyxvXcqis6n52PtrPlf0GMGvmF8E8NpxUn47hFOQQa+bf4OY4lmuNnCjUIypp4oh/U6T49XaIu0jhQ=="},{"s":"ebwlXWlWRPyYPjpoqjxUSQ==","i":"nLYueJiPzdJO4Kdm","c":"lYQC5nxpsW/g2hgyTNyFyN6KMIaGznXw5/x+sOf+RhjY63PD/WrbbRoC+SBg7vwDHEw8CzUK8GRFohapeTUsAcwBHDiQTwcm47PforD15HfZydaKSUjwYxjxA7+x0UJI/+aMzwvaAhP87ZhylXLnQMenAegM8sgnJQXk9H7jGwsJ6q/OTI1wKTJfNAA/07b/yg3XhgB1X/ZLENdY1TGEQDK6t/1ARaE/wAUiA9ESV9pNYzb7VPr1bPwjzsSznJT+zgksctEZxYyI7pcXqmc6hpTRQodi10QnxEHUK4ROl2ej768fP/cGAVNr/pzf08mscVXoU+zcvALueCEnpkaVy1zRoNSHVFKv1go97cx9lsUhRRBazoKjJVlsFfZqvzJ8y1CLJz7lm7Lr9dq85ZK3TfA="},{"s":"fkvoqANWx6um4dxhmqe2Pw==","i":"NeaJXhAU4WuVtrjC","c":"qKXsZePiaK3sNVCNpWza0wPqUUZUZ5wBUapN3pkLpHNFxy3l4/2NvkQ4TYagBs7Iy3mlBXMbTf4xuSAzORlTwejIuMApBOdH0Fd9vt+6wRvqQfun17Zm7WoqyTIAjcDA0ieEPWnrq1oplJVs+s5p5Z3eXdJcubNpiKYw49KutXseA9l0ynjoBLNQeusf+ytMzC2u78vwqr/uO/6G2Chd3nu2FAvjBGsCtmwRPxk2jC4DOgfCfT8YeWM2hA=="},{"s":"CcERAJoriT2lwjC3KMoNsA==","i":"/s4QPLFu6JgXs7Gn","c":"nsfkPe2KKQhE61JawaYDbFmuCDlTyZgTBY4yOp+i3ZE94wWEjzQjzNmjFNzyNRfu79ccgQwZGFI0/N/tvuBMJjEQU9ImDvd1JFx9yy1DG730tiPx0ETfpIVNm2RFNfLcEIKGMmRyqK/sojajvjp7G6bpgI8Kfe5DyXtt3aJjO4r08ni3ZSbn3RG/dsAeqOW7bfflpPi/Iov8SzSF1bzCKBVstK5ikaqb0sUu6CnF8oP30aGYWe+k1hLtKQmEEyBlv2s="},{"s":"NjZP9OauR8uzPQfSxeEh3w==","i":"LiQaVKd7b1eUouSo","c":"7/8Zyq3Cxz0WJYglrBYAzIdv+5Ox7N0xpKVjZkpjUnNhPaVgKSrOfG62gKeHSl+cZNC81lNJKaLp6oxRqAcl1SkyQnkfSSUUXvhEXx0h9EePcx+KOsH6aBeSbLrZ5m7O2ApkyZgCUHlKCRiVVan7p9Hck7RPUHLIdWDYt5YIw4WRMvQYRCb7O2bGjGFE8faOx1CTqGvQNGXrtB+El44l9jO6ErIXLXCjFxa3+ZKuMiJWwGQPoFomwnyYodY+Xgy6tMZLzDVyd360tAU="},{"s":"CugDyO+Ee8oL/IEUDdastw==","i":"ccnloJV8Z7ZXc+NJ","c":"rnwb6550maZyhYvE+7uTS1Aqv3yTk8if8cpUJht9qkxFLE6zx6GmpB6vhKEFfxR7Aj44vwpZUCo2HQnt8TAoSi/dDNMP0q4mIBc1r7r9610C74MCBiC9XF3qNt6BiR3OvQFUG21Q1ymrQUQE9EPKyDJxfVOhYNf7wXMZDLCKhyARR7jPjgvfWY11Qg=="},{"s":"etA+ygicithpoyZrtv6Sxg==","i":"iDOaunxOwVFCHIDy","c":"yKO2wOuDzZ2pWBWhZwl1JOxaKC78pI1ABlqeXRE3Tgh3sOzQz7aSI44Znt6YIQHSSjPrpBVzdqxx7stFIDYWYKtgI5jtzN+Dwi8nhncSIQk50dfYCw+up9d4juu4s3D7NLynPKS2BUeSIj36SH3OFR3Tt43/p1ckA/vo20CpJEiWJyZa6Kxqk9Hv5tB/625nFLPQBZZ1tsPWfDfOnE62F1H5q86D1HaSkrTLz3rqRw=="},{"s":"Dexi8Oge8DYv6OH+FU5b9A==","i":"/t8ijVHiQavtiDdJ","c":"faKkd8dnatLK019CVosOZO3fp6Hht2VbLmfId5lBfBDeD7wFUJYqibFgd183+vKohsiRh/F644vqV8qdl9ieyBbs0kzgmb3pjyQqgfwEofAWlMth3TcgumOhWfUJBmcwAi1xrw9jAW2WzyEnTkonFaDEw5yYnuriqW6IOMB2jR2ahpeZkSfKtDK4RlKJKt3LMIPwnpdNuPt4AHKhnA8S+RKe2CJ66ryAwYOHEBdWSnHiiOexzaKCrz4kYgWGmwdKbkfBZfEEtaaQRuzwg1oHB3OYcN4MO74262EOcZAZwU+V5A=="}]}</script>
+<script>
+(() => {
+  const DATA = JSON.parse(document.getElementById('hunt-data').textContent);
+  const app = document.getElementById('app');
+  const KEY = 'clue-hunt-' + DATA.start.s.slice(0, 16);
+  const te = new TextEncoder(), td = new TextDecoder();
+  const ub64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/gi, '').toUpperCase();
+  async function open(secret, box) {
+    const base = await crypto.subtle.importKey('raw', te.encode(secret), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: ub64(box.s), iterations: DATA.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    return JSON.parse(td.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64(box.i) }, key, ub64(box.c))));
+  }
+  let S = null;
+  try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+  function form(placeholder, label, onSubmit) {
+    const f = el('form'); const input = el('input'); input.placeholder = placeholder; input.setAttribute('aria-label', label);
+    input.autocomplete = 'off'; input.setAttribute('autocapitalize', 'characters'); input.spellcheck = false;
+    const b = el('button', null, 'Unlock'); b.type = 'submit'; f.append(input, b);
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault(); if (!norm(input.value)) { input.focus(); return; }
+      b.disabled = true; b.textContent = 'Checking…';
+      const ok = await onSubmit(input.value);
+      if (!ok) { b.disabled = false; b.textContent = 'Unlock'; }
+    });
+    return { f, input };
+  }
+  function fail(card, box, text) {
+    let m = box.querySelector('.msg.bad'); if (!m) { m = el('div', 'msg bad'); box.append(m); }
+    m.textContent = text; card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+  }
+
+  function render() {
+    app.replaceChildren();
+    if (!crypto || !crypto.subtle) { app.append(el('p', null, "This page can't unlock clues here. Open it from its web address (https://…) in Safari or Chrome.")); return; }
+    if (!S || !S.start) return renderLock();
+    const n = DATA.n, step = S.found.length;
+    const head = el('header'); head.style.cssText = 'display:flex;flex-direction:column;gap:4px';
+    head.append(el('span', 'label', 'Scavenger hunt'), el('h1', null, S.start.title || DATA.title));
+    app.append(head);
+
+    const prog = el('div', 'progress'); const segs = el('div', 'segs');
+    for (let i = 0; i < n; i++) segs.append(el('i', i < step ? 'done' : i === step ? 'here' : ''));
+    prog.append(el('span', 'label', step >= n ? `All ${n} stops found` : `${step} of ${n} found`), segs);
+    app.append(prog);
+
+    if (step >= n) {
+      const fin = el('section', 'card finish');
+      fin.append(el('span', 'big', 'You did it!'), el('p', 'welcome', S.found[n - 1].final || `You found all ${n} stops.`));
+      app.append(fin);
+    } else {
+      const card = el('article', 'card');
+      const stub = el('div', 'stub'); stub.append(el('span', 'stop', `Stop ${step + 1} of ${n}`), el('span', 'label', 'Your clue'));
+      const body = el('div', 'body');
+      if (step === 0 && S.start.welcome) body.append(el('p', 'welcome', S.start.welcome));
+      if (step > 0) body.append(el('div', 'msg ok', `Correct! You found ${S.found[step - 1].found}.`));
+      body.append(el('p', 'clue', step === 0 ? S.start.clue : S.found[step - 1].next));
+      const hint = step === 0 ? S.start.hint : S.found[step - 1].nextHint;
+      if (hint) {
+        S.hints = S.hints || {};
+        const showHint = () => { const h = el('div', 'hint'); h.append(el('b', null, 'Hint'), document.createTextNode(hint)); return h; };
+        if (S.hints[step]) body.append(showHint());
+        else {
+          const hb = el('button', 'hintbtn', 'Get a hint'); hb.type = 'button';
+          hb.addEventListener('click', () => { S.hints[step] = true; save(); hb.replaceWith(showHint()); });
+          body.append(hb);
+        }
+      }
+      const who = S.start.from || 'me';
+      const lines = Array.isArray(S.start.steps) ? S.start.steps : ['Go to the place the clue describes.', `Take a photo there and text it to ${who}.`, `Type the code ${who} sends back.`];
+      if (lines.length) { const steps = el('ol', 'steps'); lines.forEach((t) => steps.append(el('li', null, t))); body.append(steps); }
+      const { f, input } = form('Unlock code', 'Unlock code', async (val) => {
+        try {
+          const r = await open(S.pw + '\u0000' + norm(val), DATA.steps[step]);
+          S.found.push(r); save(); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return true;
+        } catch (e) { fail(card, body, `That code doesn't match. Check the text from ${who} and try again.`); input.select(); return false; }
+      });
+      body.append(f);
+      card.append(stub, body); app.append(card);
+    }
+    if (step > 0) {
+      const list = el('section', 'found'); list.append(el('span', 'label', 'Found so far'));
+      S.found.forEach((r, i) => { const row = el('div'); row.append(el('b', null, String(i + 1)), el('span', null, r.found)); list.append(row); });
+      app.append(list);
+    }
+    const foot = el('footer'); const reset = el('button', 'link', 'Start over on this phone'); let armed = false;
+    reset.addEventListener('click', () => {
+      if (!armed) { armed = true; reset.textContent = 'Tap again to erase your progress'; return; }
+      S = null; try { localStorage.removeItem(KEY); } catch (e) {} render();
+    });
+    foot.append(reset); app.append(foot);
+  }
+
+  function renderLock() {
+    const head = el('header'); head.style.cssText = 'display:flex;flex-direction:column;gap:4px';
+    head.append(el('span', 'label', 'Scavenger hunt'), el('h1', null, DATA.title));
+    const card = el('section', 'card'); const body = el('div', 'body');
+    body.append(el('p', 'welcome', DATA.lockText || 'Enter the password to start.'));
+    const { f, input } = form('Password', 'Password', async (val) => {
+      try {
+        const start = await open(norm(val), DATA.start);
+        S = { pw: norm(val), start, found: [] }; save(); render(); return true;
+      } catch (e) { fail(card, body, "That password isn't right."); input.select(); return false; }
+    });
+    body.append(f); card.append(body); app.append(head, card);
+    input.focus();
+  }
+  render();
+})();
+</script>
+</body>
+</html>
